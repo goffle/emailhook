@@ -6,9 +6,9 @@ const { simpleParser } = require("mailparser");
 const EMAILBUCKET = "emailhook";
 
 exports.handler = async event => {
-  const msg = await fetchMessage(event.Records[0]);
-  console.log(msg);
-  await postEmail("msg", msg);
+  const mailobject = await fetchMessage(event.Records[0]);
+  console.log("mailobject", mailobject);
+  await postEmail(mailobject);
   console.log("###3", new Date());
 
   return { statusCode: 200 };
