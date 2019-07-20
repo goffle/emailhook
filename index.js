@@ -6,16 +6,17 @@ const { simpleParser } = require("mailparser");
 const EMAILBUCKET = "emailhook";
 
 exports.handler = async event => {
-  const mailobject = await fetchMessage(event.Records[0]);
-  console.log("mailobject", mailobject);
-  await postEmail(mailobject);
-  console.log("###3", new Date());
-
+  console.log("#0")
+   const mailobject = await fetchMessage(event.Records[0]);
+  console.log("#1")
+  const obj = extractInfo(mailobject)
+  console.log("#2")
+  await postEmail(obj);
   return { statusCode: 200 };
 };
 
+
 function fetchMessage(record) {
-  console.log("IIIIIIIIIII");
   const messageId = record.ses.mail.messageId;
   // Copying email object to ensure read permission
   console.log({
@@ -71,7 +72,7 @@ function fetchMessage(record) {
   });
 }
 
-function postEmail(data) {
+function postEmail(obj) {
   return new Promise((resolve, reject) => {
     const options = {
       hostname:
@@ -87,13 +88,12 @@ function postEmail(data) {
         "Content-Type": "application/json"
       }
     };
-
-    console.log("###5", new Date());
+    
+    console.log("#4")
 
     const req = http.request(options, res => {
       res.setEncoding("utf8");
       res.on("data", response => {
-        console.log("###6", new Date());
         resolve(response);
       });
       res.on("error", err => {
@@ -107,10 +107,19 @@ function postEmail(data) {
       reject(e);
       console.error(`problem with request: ${e.message}`);
     });
-
-    console.log("###7", JSON.stringify(data));
-
-    req.write(JSON.stringify(data));
+  
+    req.write(JSON.stringify(obj));
     req.end();
   });
+}
+
+
+function extractInfo(mail){
+    const subject = mail.subject;
+    const html = mail.html;
+    const text = mail.text;
+    const from = mail.from.value[0].address;
+    const to = mail.to.value[0].address;
+    
+    return {subject, html,text,from,to}
 }
