@@ -1,0 +1,12 @@
+{
+  "name": "emailhook",
+  "description": "Receive an email, store in S3 bucket, trigger a lambda function.",
+  "version": "1.0.0",
+  "author": "Datadvise",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.496.0",
+    "http": "0.0.0",
+    "mailparser": "^2.7.1"
+  }
+}
