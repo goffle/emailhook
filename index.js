@@ -28,8 +28,8 @@ function fetchMessage(record) {
   return new Promise(function(resolve, reject) {
     s3.copyObject(
       {
-        Bucket: emailBucket,
-        CopySource: emailBucket + "/" + messageId,
+        Bucket: EMAILBUCKET,
+        CopySource: EMAILBUCKET + "/" + messageId,
         Key: messageId,
         ACL: "private",
         ContentType: "text/plain",

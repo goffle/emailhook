@@ -5,8 +5,10 @@
   "author": "Datadvise",
   "license": "MIT",
   "dependencies": {
-    "aws-sdk": "^2.496.0",
     "http": "0.0.0",
     "mailparser": "^2.7.1"
+  },
+  "scripts": {
+    "update": "aws lambda update-function-code --function-name Emailhook --zip-file fileb://Archive.zip --profil postajob --region eu-west-1"
   }
 }
