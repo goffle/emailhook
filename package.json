@@ -1,5 +1,5 @@
 {
-  "name": "emailhook",
+  "name": "Emailhook",
   "description": "Receive an email, store in S3 bucket, trigger a lambda function.",
   "version": "1.0.0",
   "author": "Datadvise",
